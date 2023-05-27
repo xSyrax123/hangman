@@ -1,0 +1,110 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  max-width: 100vw;
+  max-height: 100vh;
+}
+
+header {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.game-stage {
+  min-height: 350px;
+  max-height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-current-word {
+  min-height: 50px;
+  max-height: 50px;
+  display: flex;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: bold; 
+}
+
+.virtual-keyboard {
+  min-height: 80px;
+  max-height: 80px;
+  max-width: 100vw;
+}
+
+.virtual-keys {
+  max-width: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0 auto;
+}
+
+.btn {
+  background: none;
+  border: 0;
+  background-color: #0066cc;
+  box-shadow: 2px 2px 1px #036;
+  color: #f3ffff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: bold;
+  line-height: normal;
+  overflow: visible;
+  width: 35px;
+  height: 35px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 0 10px;
+  margin: 5px;
+}
+
+.hint-button {
+  width: 40px;
+  font-size: 12px;
+  visibility: hidden;
+}
+
+.new-word-button {
+  width: 40px;
+  font-size: 12px;
+  visibility: hidden;
+}
+
+.disabled {
+  background-color: #fff;
+  color: #000;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.final-result {
+  text-align: center;
+  font-size: 17px;
+  font-weight: bold;
+  margin-top: 30px;
+}
+
+.correct {
+  color: green;
+  font-size: 25px;
+}
+
+.incorrect {
+  color: red;
+  font-size: 25px;
+}
