@@ -116,6 +116,11 @@ function initializeGame() {
   /*
    * Initialize the game and choose a secret word at random.
    */
+  gameData.NEW_WORD_BUTTON.style.visibility = "hidden";
+  gameData.BLANKS_TAG.classList.remove("correct", "incorrect");
+  gameData.VIRTUAL_KEYS.querySelectorAll(".btn").forEach((BUTTON) => {
+    BUTTON.classList.remove("disabled");
+  });
   gameData.secretWord =
     gameData.WORDS_ARRAY[
       Math.floor(Math.random() * gameData.WORDS_ARRAY.length)
@@ -170,11 +175,6 @@ document.addEventListener("click", (event) => {
   const target = event.target;
 
   if (target === gameData.NEW_WORD_BUTTON) {
-    gameData.NEW_WORD_BUTTON.style.visibility = "hidden";
-    gameData.BLANKS_TAG.classList.remove("correct", "incorrect");
-    gameData.VIRTUAL_KEYS.querySelectorAll(".btn").forEach((BUTTON) => {
-      BUTTON.classList.remove("disabled");
-    });
     initializeGame();
   } else if (target.parentNode === gameData.VIRTUAL_KEYS) {
     play(event);
