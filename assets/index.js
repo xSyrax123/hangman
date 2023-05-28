@@ -31,7 +31,7 @@ function guessAndUpdateBlanks(LETTER) {
    */
   let isGoodGuess = false;
   let lastCorrectSpan = null;
-  
+
   for (const [I, CHAR] of gameData.secretWordLowercase.entries()) {
     if (CHAR === LETTER) {
       isGoodGuess = true;
@@ -101,14 +101,12 @@ function checkGameResult() {
    * Checks the game result and displays the secret word accordingly.
    */
   const BLANKS_STRING = gameData.blanks.join("");
+  const SECRET_WORD_LOWERCASE_STRING = gameData.secretWordLowercase.join("");
   gameData.BLANKS_TAG.textContent = gameData.secretWord;
   gameData.HINT_BUTTON.style.visibility = "hidden";
   gameData.NEW_WORD_BUTTON.style.visibility = "visible";
 
-  if (
-    gameData.trials === 0 &&
-    BLANKS_STRING !== gameData.secretWordLowercase.join("")
-  )
+  if (BLANKS_STRING !== SECRET_WORD_LOWERCASE_STRING)
     gameData.BLANKS_TAG.classList.add("incorrect");
   else if (BLANKS_STRING === gameData.secretWordLowercase.join(""))
     gameData.BLANKS_TAG.classList.add("correct");
