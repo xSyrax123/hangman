@@ -106,10 +106,10 @@ function checkGameResult() {
   gameData.HINT_BUTTON.style.visibility = "hidden";
   gameData.NEW_WORD_BUTTON.style.visibility = "visible";
 
-  if (BLANKS_STRING !== SECRET_WORD_LOWERCASE_STRING)
-    gameData.BLANKS_TAG.classList.add("incorrect");
-  else if (BLANKS_STRING === gameData.secretWordLowercase.join(""))
+  if (BLANKS_STRING === SECRET_WORD_LOWERCASE_STRING)
     gameData.BLANKS_TAG.classList.add("correct");
+  else
+    gameData.BLANKS_TAG.classList.add("incorrect");
 }
 
 function initializeGame() {
