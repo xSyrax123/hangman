@@ -4,7 +4,6 @@ const gameData = {
   trials: 0,
   blanks: [],
   secretWordLowercase: [],
-  usedLetters: new Set(),
   hintUsed: false,
   words: "",
   BLANKS_TAG: document.querySelector(".current-word"),
@@ -32,16 +31,12 @@ function guessAndUpdateBlanks(LETTER) {
    */
   let isGoodGuess = false;
   let lastCorrectSpan = null;
-
-  for (let i = 0; i < gameData.secretWordLowercase.length; i++) {
-    if (
-      gameData.secretWordLowercase[i] === LETTER &&
-      gameData.blanks[i] === "_"
-    ) {
-      gameData.blanks[i] = LETTER;
-      gameData.usedLetters[LETTER] = true;
+  
+  for (const [I, CHAR] of gameData.secretWordLowercase.entries()) {
+    if (CHAR === LETTER) {
       isGoodGuess = true;
-      lastCorrectSpan = gameData.BLANKS_TAG.querySelectorAll("span")[i];
+      gameData.blanks[I] = LETTER;
+      lastCorrectSpan = gameData.BLANKS_TAG.querySelectorAll("span")[I];
     }
   }
 
@@ -129,7 +124,7 @@ function initializeGame() {
   gameData.trials = gameData.MAX_TRIALS;
   gameData.blanks = Array(gameData.secretWord.length).fill("_");
   gameData.secretWordLowercase = gameData.secretWord.toLowerCase().split("");
-  gameData.usedLetters = {};
+  gameData.usedLetters = new Set();
   gameData.hintUsed = false;
   gameData.BLANKS_TAG.textContent = gameData.blanks.join(" ");
   gameData.VIRTUAL_KEYS.querySelectorAll(".btn").forEach((BUTTON) => {
