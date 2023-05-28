@@ -125,9 +125,6 @@ function initializeGame() {
   gameData.usedLetters = new Set();
   gameData.hintUsed = false;
   gameData.BLANKS_TAG.textContent = gameData.blanks.join(" ");
-  gameData.VIRTUAL_KEYS.querySelectorAll(".btn").forEach((BUTTON) => {
-    BUTTON.classList.remove("disabled");
-  });
   updateHangmanImage();
 }
 
@@ -172,8 +169,11 @@ document.addEventListener("click", (event) => {
   const target = event.target;
 
   if (target === gameData.NEW_WORD_BUTTON) {
-    gameData.BLANKS_TAG.classList.remove("correct", "incorrect");
     gameData.NEW_WORD_BUTTON.style.visibility = "hidden";
+    gameData.BLANKS_TAG.classList.remove("correct", "incorrect");
+    gameData.VIRTUAL_KEYS.querySelectorAll(".btn").forEach((BUTTON) => {
+      BUTTON.classList.remove("disabled");
+    });
     initializeGame();
   } else if (target.parentNode === gameData.VIRTUAL_KEYS) {
     play(event);
