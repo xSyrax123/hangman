@@ -3,9 +3,10 @@ const gameData = {
   MAX_TRIALS: 6,
   trials: 0,
   blanks: [],
-  secretWordLowercase: [],
+  secretWordArray: [],
   hintUsed: false,
   words: "",
+  WORDS_ARRAY: [],
   BLANKS_TAG: document.querySelector(".current-word"),
   VIRTUAL_KEYS: document.querySelector(".virtual-keys"),
   HINT_BUTTON: document.querySelector(".hint-button"),
@@ -32,7 +33,7 @@ function guessAndUpdateBlanks(LETTER) {
   let isGoodGuess = false;
   let lastCorrectSpan = null;
 
-  for (const [I, CHAR] of gameData.secretWordLowercase.entries()) {
+  for (const [I, CHAR] of gameData.secretWordArray.entries()) {
     if (CHAR === LETTER) {
       isGoodGuess = true;
       gameData.blanks[I] = LETTER;
@@ -77,7 +78,7 @@ function hint() {
   );
   const NON_MATCHING_LETTERS = VIRTUAL_KEYS_CHILDREN.map((BUTTON) =>
     BUTTON.getAttribute("data-value").toLowerCase()
-  ).filter((LETTER) => !gameData.secretWordLowercase.includes(LETTER));
+  ).filter((LETTER) => !gameData.secretWordArray.includes(LETTER));
   const MAX_LETTERS_TO_SHOW = Math.min(6, NON_MATCHING_LETTERS.length);
   const INDEXES = new Set();
 
@@ -101,28 +102,27 @@ function checkGameResult() {
    * Checks the game result and displays the secret word accordingly.
    */
   const BLANKS_STRING = gameData.blanks.join("");
-  const SECRET_WORD_LOWERCASE_STRING = gameData.secretWordLowercase.join("");
+  const SECRET_WORD_LOWERCASE_STRING = gameData.secretWordArray.join("");
   gameData.BLANKS_TAG.textContent = gameData.secretWord;
   gameData.HINT_BUTTON.style.visibility = "hidden";
   gameData.NEW_WORD_BUTTON.style.visibility = "visible";
 
   if (BLANKS_STRING === SECRET_WORD_LOWERCASE_STRING)
     gameData.BLANKS_TAG.classList.add("correct");
-  else
-    gameData.BLANKS_TAG.classList.add("incorrect");
+  else gameData.BLANKS_TAG.classList.add("incorrect");
 }
 
 function initializeGame() {
   /*
    * Initialize the game and choose a secret word at random.
    */
-  const WORDS_ARRAY = gameData.words.split(" ");
   gameData.secretWord =
-    WORDS_ARRAY[Math.floor(Math.random() * WORDS_ARRAY.length)];
+    gameData.WORDS_ARRAY[
+      Math.floor(Math.random() * gameData.WORDS_ARRAY.length)
+    ];
   gameData.trials = gameData.MAX_TRIALS;
   gameData.blanks = Array(gameData.secretWord.length).fill("_");
-  gameData.secretWordLowercase = gameData.secretWord.toLowerCase().split("");
-  gameData.usedLetters = new Set();
+  gameData.secretWordArray = gameData.secretWord.split("");
   gameData.hintUsed = false;
   gameData.BLANKS_TAG.textContent = gameData.blanks.join(" ");
   updateHangmanImage();
@@ -159,6 +159,7 @@ fetch("./words.txt")
   .then((response) => response.text())
   .then((data) => {
     gameData.words = data;
+    gameData.WORDS_ARRAY = gameData.words.split(" ");
     initializeGame();
   })
   .catch((error) => {
