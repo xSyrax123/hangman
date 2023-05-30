@@ -173,13 +173,13 @@ fetch("./words.txt")
   });
 
 document.addEventListener("click", (event) => {
-  const target = event.target;
+  const TARGET = event.target;
 
-  if (target === gameData.NEW_WORD_BUTTON) {
+  if (TARGET === gameData.NEW_WORD_BUTTON) {
     initializeGame();
-  } else if (target.parentNode === gameData.VIRTUAL_KEYS) {
+  } else if (TARGET.parentNode === gameData.VIRTUAL_KEYS) {
     play(event);
-  } else if (target === gameData.HINT_BUTTON) {
+  } else if (TARGET === gameData.HINT_BUTTON) {
     hint();
   }
 });
