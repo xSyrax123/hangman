@@ -102,12 +102,12 @@ function checkGameResult() {
    * Checks the game result and displays the secret word accordingly.
    */
   const BLANKS_STRING = gameData.blanks.join("");
-  const SECRET_WORD_LOWERCASE_STRING = gameData.secretWordArray.join("");
+  const SECRET_WORD_STRING = gameData.secretWordArray.join("");
   gameData.BLANKS_TAG.textContent = gameData.secretWord;
   gameData.HINT_BUTTON.style.visibility = "hidden";
   gameData.NEW_WORD_BUTTON.style.visibility = "visible";
 
-  if (BLANKS_STRING === SECRET_WORD_LOWERCASE_STRING)
+  if (BLANKS_STRING === SECRET_WORD_STRING)
     gameData.BLANKS_TAG.classList.add("correct");
   else gameData.BLANKS_TAG.classList.add("incorrect");
 }
