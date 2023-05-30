@@ -74,26 +74,25 @@ function hint() {
    */
   gameData.HINT_BUTTON.style.visibility = "hidden";
   gameData.hintUsed = true;
-  const VIRTUAL_KEYS_CHILDREN = Array.from(
+
+  const VIRTUAL_KEYS_CHIDREN = Array.from(
     gameData.VIRTUAL_KEYS.querySelectorAll(".btn:not(.disabled)")
   );
-  const NON_MATCHING_LETTERS = VIRTUAL_KEYS_CHILDREN.map((BUTTON) =>
-    BUTTON.getAttribute("data-value")
-  ).filter((LETTER) => !gameData.secretWordArray.includes(LETTER));
-  const MAX_LETTERS_TO_SHOW = Math.min(6, NON_MATCHING_LETTERS.length);
-  const INDEXES = new Set();
+  const MAX_LETTERS_TO_SHOW = Math.floor(Math.random() * 6) + 1;
+  const INDEXES = [];
 
-  for (let i = 0; i < MAX_LETTERS_TO_SHOW; i++) {
-    let randomIndex = Math.floor(Math.random() * NON_MATCHING_LETTERS.length);
-    while (INDEXES.has(randomIndex)) {
-      randomIndex = Math.floor(Math.random() * NON_MATCHING_LETTERS.length);
+  while (INDEXES.length < MAX_LETTERS_TO_SHOW) {
+    const RANDOM_INDEX = Math.floor(Math.random() * VIRTUAL_KEYS_CHIDREN.length);
+    const BUTTON = VIRTUAL_KEYS_CHIDREN[RANDOM_INDEX];
+    const LETTER = BUTTON.getAttribute("data-value");
+
+    if (
+      !INDEXES.includes(RANDOM_INDEX) &&
+      !gameData.secretWordArray.includes(LETTER)
+    ) {
+      BUTTON.classList.add("disabled");
+      INDEXES.push(RANDOM_INDEX);
     }
-    const BUTTON = VIRTUAL_KEYS_CHILDREN.find(
-      (BTN) =>
-        BTN.getAttribute("data-value") === NON_MATCHING_LETTERS[randomIndex]
-    );
-    BUTTON.classList.add("disabled");
-    INDEXES.add(randomIndex);
   }
 }
 
