@@ -78,7 +78,7 @@ function hint() {
     gameData.VIRTUAL_KEYS.querySelectorAll(".btn:not(.disabled)")
   );
   const NON_MATCHING_LETTERS = VIRTUAL_KEYS_CHILDREN.map((BUTTON) =>
-    BUTTON.getAttribute("data-value").toLowerCase()
+    BUTTON.getAttribute("data-value")
   ).filter((LETTER) => !gameData.secretWordArray.includes(LETTER));
   const MAX_LETTERS_TO_SHOW = Math.min(6, NON_MATCHING_LETTERS.length);
   const INDEXES = new Set();
@@ -90,8 +90,7 @@ function hint() {
     }
     const BUTTON = VIRTUAL_KEYS_CHILDREN.find(
       (BTN) =>
-        BTN.getAttribute("data-value").toLowerCase() ===
-        NON_MATCHING_LETTERS[randomIndex]
+        BTN.getAttribute("data-value") === NON_MATCHING_LETTERS[randomIndex]
     );
     BUTTON.classList.add("disabled");
     INDEXES.add(randomIndex);
@@ -146,7 +145,7 @@ function play(event) {
     !event.target.classList.contains("disabled")
   ) {
     const BUTTON = event.target;
-    const LETTER = BUTTON.getAttribute("data-value").toLowerCase();
+    const LETTER = BUTTON.getAttribute("data-value");
     const IS_GOOD_GUESS = guessAndUpdateBlanks(LETTER);
 
     replaceGuessedLetters(IS_GOOD_GUESS, LETTER);
