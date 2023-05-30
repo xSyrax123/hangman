@@ -82,7 +82,9 @@ function hint() {
   const INDEXES = [];
 
   while (INDEXES.length < MAX_LETTERS_TO_SHOW) {
-    const RANDOM_INDEX = Math.floor(Math.random() * VIRTUAL_KEYS_CHIDREN.length);
+    const RANDOM_INDEX = Math.floor(
+      Math.random() * VIRTUAL_KEYS_CHIDREN.length
+    );
     const BUTTON = VIRTUAL_KEYS_CHIDREN[RANDOM_INDEX];
     const LETTER = BUTTON.getAttribute("data-value");
 
