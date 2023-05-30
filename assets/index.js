@@ -56,10 +56,11 @@ function replaceGuessedLetters(IS_GOOD_GUESS, LETTER) {
    */
   if (IS_GOOD_GUESS) {
     const BLANKS_STRING = gameData.blanks.join(" ");
-    gameData.BLANKS_TAG.innerHTML = BLANKS_STRING.replace(
+    const UPDATED_BLANKS_STRING = BLANKS_STRING.replace(
       new RegExp(LETTER, "gi"),
       `<span class="correct">${LETTER}</span>`
     );
+    gameData.BLANKS_TAG.innerHTML = UPDATED_BLANKS_STRING;
   } else {
     gameData.trials--;
     updateHangmanImage();
