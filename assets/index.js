@@ -142,21 +142,16 @@ function initializeGame() {
 function play(event) {
   if (gameData.trials === 0 || !gameData.blanks.includes("_")) return;
 
-  if (
-    event.target.classList.contains("btn") &&
-    !event.target.classList.contains("disabled")
-  ) {
-    const BUTTON = event.target;
-    const LETTER = BUTTON.getAttribute("data-value");
-    const IS_GOOD_GUESS = guessAndUpdateBlanks(LETTER);
+  const BUTTON = event.target;
+  const LETTER = BUTTON.getAttribute("data-value");
+  const IS_GOOD_GUESS = guessAndUpdateBlanks(LETTER);
 
-    replaceGuessedLetters(IS_GOOD_GUESS, LETTER);
+  replaceGuessedLetters(IS_GOOD_GUESS, LETTER);
 
-    BUTTON.classList.add("disabled");
+  BUTTON.classList.add("disabled");
 
-    if (gameData.trials === 1 && !gameData.hintUsed)
-      gameData.HINT_BUTTON.style.visibility = "visible";
-  }
+  if (gameData.trials === 1 && !gameData.hintUsed)
+    gameData.HINT_BUTTON.style.visibility = "visible";
 
   if (gameData.trials === 0 || !gameData.blanks.includes("_"))
     checkGameResult();
