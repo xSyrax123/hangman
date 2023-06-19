@@ -153,7 +153,7 @@ function play(event) {
   if (gameData.trials === 1 && !gameData.hintUsed)
     gameData.HINT_BUTTON.style.visibility = "visible";
 
-  if (gameData.trials === 0 || !gameData.blanks.includes("_"))
+  if (!gameData.trials || !gameData.blanks.includes("_"))
     checkGameResult();
 }
 
