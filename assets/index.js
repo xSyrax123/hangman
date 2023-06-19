@@ -14,22 +14,24 @@ const gameData = {
   HANGMAN_IMAGE: document.querySelector("img"),
 };
 
+/**
+ * Updates the hangman image based on the number of attempts remaining.
+ */
 function updateHangmanImage() {
-  /*
-   * Updates the hangman image based on the number of attempts remaining.
-   */
   gameData.HANGMAN_IMAGE.src = `img/${
     gameData.MAX_TRIALS - gameData.trials
   }.png`;
 }
 
+/**
+ * Updates the blanks with the correctly guessed letter and marks the
+ * corresponding span element as correct.
+ * @param {string} LETTER - The letter to guess.
+ * @returns {boolean} Returns true if it's a good guess, false otherwise.
+ */
 function guessAndUpdateBlanks(LETTER) {
-  /**
-   * Updates the blanks with the correctly guessed letter and marks the
-   * corresponding span element as correct.
-   * @param {string} LETTER - The letter to guess.
-   * @returns {boolean} Returns true if it's a good guess, false otherwise.
-   */
+  const SPANS = gameData.BLANKS_TAG.querySelectorAll("span");
+  
   let isGoodGuess = false;
   let lastCorrectSpan = null;
 
@@ -37,7 +39,7 @@ function guessAndUpdateBlanks(LETTER) {
     if (CHAR === LETTER) {
       isGoodGuess = true;
       gameData.blanks[I] = LETTER;
-      lastCorrectSpan = gameData.BLANKS_TAG.querySelectorAll("span")[I];
+      lastCorrectSpan = SPANS[I];
     }
   }
 
@@ -47,13 +49,12 @@ function guessAndUpdateBlanks(LETTER) {
   else return false;
 }
 
+/**
+ * Replaces the guessed letters in the string of blanks and updates the hangman image if the guess is incorrect.
+ * @param {boolean} IS_GOOD_GUESS - Indicates if the guess is correct.
+ * @param {string} LETTER - The guessed letter.
+ */
 function replaceGuessedLetters(IS_GOOD_GUESS, LETTER) {
-  /**
-   * Replaces the guessed letters in the string of blanks and updates the
-   * hangman image if the guess is incorrect.
-   * @param {boolean} IS_GOOD_GUESS - Indicates if the guess is correct.
-   * @param {string} LETTER - The guessed letter.
-   */
   if (IS_GOOD_GUESS) {
     const BLANKS_STRING = gameData.blanks.join(" ");
     const UPDATED_BLANKS_STRING = BLANKS_STRING.replace(
@@ -67,11 +68,10 @@ function replaceGuessedLetters(IS_GOOD_GUESS, LETTER) {
   }
 }
 
+/**
+ * Provides a hint by disabling a number of letters that are not in the secret word.
+ */
 function hint() {
-  /*
-   * Provides a hint by disabling a number of letters that are not in the
-   * secret word.
-   */
   gameData.HINT_BUTTON.style.visibility = "hidden";
   gameData.hintUsed = true;
 
@@ -98,12 +98,13 @@ function hint() {
   }
 }
 
+/**
+ * Checks the game result and displays the secret word accordingly.
+ */
 function checkGameResult() {
-  /*
-   * Checks the game result and displays the secret word accordingly.
-   */
   const BLANKS_STRING = gameData.blanks.join("");
   const SECRET_WORD_STRING = gameData.secretWordArray.join("");
+  
   gameData.BLANKS_TAG.textContent = gameData.secretWord;
   gameData.HINT_BUTTON.style.visibility = "hidden";
   gameData.NEW_WORD_BUTTON.style.visibility = "visible";
@@ -113,10 +114,10 @@ function checkGameResult() {
   else gameData.BLANKS_TAG.classList.add("incorrect");
 }
 
+/**
+ * Initialize the game and choose a secret word at random.
+ */
 function initializeGame() {
-  /*
-   * Initialize the game and choose a secret word at random.
-   */
   gameData.NEW_WORD_BUTTON.style.visibility = "hidden";
   gameData.BLANKS_TAG.classList.remove("correct", "incorrect");
   gameData.VIRTUAL_KEYS.querySelectorAll(".btn").forEach((BUTTON) => {
@@ -134,11 +135,11 @@ function initializeGame() {
   updateHangmanImage();
 }
 
+/**
+ * Manages the game event when a virtual key is clicked.
+ * @param {Event} event - The click event object.
+ */
 function play(event) {
-  /*
-   * Manages the game event when a virtual key is clicked.
-   * @param {Event} event - The click event object.
-   */
   if (gameData.trials === 0 || !gameData.blanks.includes("_")) return;
 
   if (
