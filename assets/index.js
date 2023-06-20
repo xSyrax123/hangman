@@ -1,8 +1,8 @@
-const BLANKS_TAG = document.querySelector(".current-word");
-const VIRTUAL_KEYS = document.querySelector(".virtual-keys");
-const HINT_BUTTON = document.querySelector(".hint-button");
-const NEW_WORD_BUTTON = document.querySelector(".new-word-button");
-const HANGMAN_IMAGE = document.querySelector("img");
+const BLANKS_TAG = document.getElementById("current-word");
+const VIRTUAL_KEYS = document.getElementById("virtual-keys");
+const HINT_BUTTON = document.getElementById("hint-button");
+const NEW_WORD_BUTTON = document.getElementById("new-word-button");
+const HANGMAN_IMAGE = document.getElementById("hangman-image");
 const MAX_TRIALS = 6;
 
 let trials = MAX_TRIALS;
