@@ -96,12 +96,11 @@ function hint() {
  */
 function checkGameResult() {
   const BLANKS_STRING = blanks.join("");
-  const SECRET_WORD_STRING = secretWordArray.join("");
 
   BLANKS_TAG.textContent = secretWord;
   NEW_WORD_BUTTON.style.visibility = "visible";
 
-  if (BLANKS_STRING === SECRET_WORD_STRING) BLANKS_TAG.classList.add("correct");
+  if (BLANKS_STRING === secretWord) BLANKS_TAG.classList.add("correct");
   else BLANKS_TAG.classList.add("incorrect");
 }
 
