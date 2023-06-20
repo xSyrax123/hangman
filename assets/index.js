@@ -41,8 +41,7 @@ function guessAndUpdateBlanks(LETTER) {
 
   if (lastCorrectSpan) lastCorrectSpan.classList.remove("correct");
 
-  if (isGoodGuess) return true;
-  else return false;
+  return isGoodGuess;
 }
 
 /**
@@ -71,9 +70,7 @@ function hint() {
   HINT_BUTTON.style.visibility = "hidden";
   hintUsed = true;
 
-  const VIRTUAL_KEYS_CHILDREN = Array.from(
-    VIRTUAL_KEYS.querySelectorAll(".btn:not(.disabled)")
-  );
+  const VIRTUAL_KEYS_CHILDREN = VIRTUAL_KEYS.querySelectorAll(".btn:enabled");
   const MAX_LETTERS_TO_SHOW = Math.floor(Math.random() * 6) + 1;
   const INDEXES = [];
 
@@ -98,6 +95,7 @@ function checkGameResult() {
   const BLANKS_STRING = blanks.join("");
 
   BLANKS_TAG.textContent = secretWord;
+  HINT_BUTTON.style.visibility = "hidden";
   NEW_WORD_BUTTON.style.visibility = "visible";
 
   if (BLANKS_STRING === secretWord) BLANKS_TAG.classList.add("correct");
