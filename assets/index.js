@@ -147,8 +147,7 @@ function play(event) {
 fetch("./words.txt")
   .then((response) => response.text())
   .then((data) => {
-    const WORDS = data;
-    wordsArray = WORDS.split(" ");
+    wordsArray = data.split(" ");
     initializeGame();
   })
   .catch((error) => {
