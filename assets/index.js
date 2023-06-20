@@ -1,26 +1,22 @@
-const gameData = {
-  secretWord: "",
-  MAX_TRIALS: 6,
-  trials: 0,
-  blanks: [],
-  secretWordArray: [],
-  hintUsed: false,
-  words: "",
-  WORDS_ARRAY: [],
-  BLANKS_TAG: document.querySelector(".current-word"),
-  VIRTUAL_KEYS: document.querySelector(".virtual-keys"),
-  HINT_BUTTON: document.querySelector(".hint-button"),
-  NEW_WORD_BUTTON: document.querySelector(".new-word-button"),
-  HANGMAN_IMAGE: document.querySelector("img"),
-};
+const BLANKS_TAG = document.querySelector(".current-word");
+const VIRTUAL_KEYS = document.querySelector(".virtual-keys");
+const HINT_BUTTON = document.querySelector(".hint-button");
+const NEW_WORD_BUTTON = document.querySelector(".new-word-button");
+const HANGMAN_IMAGE = document.querySelector("img");
+const MAX_TRIALS = 6;
+
+let trials = MAX_TRIALS;
+let hintUsed;
+let blanks = [];
+let wordsArray = [];
+let secretWord = "";
+let secretWordArray = [];
 
 /**
  * Updates the hangman image based on the number of attempts remaining.
  */
 function updateHangmanImage() {
-  gameData.HANGMAN_IMAGE.src = `img/${
-    gameData.MAX_TRIALS - gameData.trials
-  }.png`;
+  HANGMAN_IMAGE.src = `img/${MAX_TRIALS - trials}.png`;
 }
 
 /**
@@ -30,15 +26,15 @@ function updateHangmanImage() {
  * @returns {boolean} Returns true if it's a good guess, false otherwise.
  */
 function guessAndUpdateBlanks(LETTER) {
-  const SPANS = gameData.BLANKS_TAG.querySelectorAll("span");
-  
+  const SPANS = BLANKS_TAG.querySelectorAll("span");
+
   let isGoodGuess = false;
   let lastCorrectSpan = null;
 
-  for (const [I, CHAR] of gameData.secretWordArray.entries()) {
+  for (const [I, CHAR] of secretWordArray.entries()) {
     if (CHAR === LETTER) {
       isGoodGuess = true;
-      gameData.blanks[I] = LETTER;
+      blanks[I] = LETTER;
       lastCorrectSpan = SPANS[I];
     }
   }
@@ -56,14 +52,14 @@ function guessAndUpdateBlanks(LETTER) {
  */
 function replaceGuessedLetters(IS_GOOD_GUESS, LETTER) {
   if (IS_GOOD_GUESS) {
-    const BLANKS_STRING = gameData.blanks.join(" ");
+    const BLANKS_STRING = blanks.join(" ");
     const UPDATED_BLANKS_STRING = BLANKS_STRING.replace(
       new RegExp(LETTER, "gi"),
       `<span class="correct">${LETTER}</span>`
     );
-    gameData.BLANKS_TAG.innerHTML = UPDATED_BLANKS_STRING;
+    BLANKS_TAG.innerHTML = UPDATED_BLANKS_STRING;
   } else {
-    gameData.trials--;
+    trials--;
     updateHangmanImage();
   }
 }
@@ -72,11 +68,11 @@ function replaceGuessedLetters(IS_GOOD_GUESS, LETTER) {
  * Provides a hint by disabling a number of letters that are not in the secret word.
  */
 function hint() {
-  gameData.HINT_BUTTON.style.visibility = "hidden";
-  gameData.hintUsed = true;
+  HINT_BUTTON.style.visibility = "hidden";
+  hintUsed = true;
 
   const VIRTUAL_KEYS_CHIDREN = Array.from(
-    gameData.VIRTUAL_KEYS.querySelectorAll(".btn:not(.disabled)")
+    VIRTUAL_KEYS.querySelectorAll(".btn:not(.disabled)")
   );
   const MAX_LETTERS_TO_SHOW = Math.floor(Math.random() * 6) + 1;
   const INDEXES = [];
@@ -88,10 +84,7 @@ function hint() {
     const BUTTON = VIRTUAL_KEYS_CHIDREN[RANDOM_INDEX];
     const LETTER = BUTTON.getAttribute("data-value");
 
-    if (
-      !INDEXES.includes(RANDOM_INDEX) &&
-      !gameData.secretWordArray.includes(LETTER)
-    ) {
+    if (!INDEXES.includes(RANDOM_INDEX) && !secretWordArray.includes(LETTER)) {
       BUTTON.classList.add("disabled");
       INDEXES.push(RANDOM_INDEX);
     }
@@ -102,36 +95,32 @@ function hint() {
  * Checks the game result and displays the secret word accordingly.
  */
 function checkGameResult() {
-  const BLANKS_STRING = gameData.blanks.join("");
-  const SECRET_WORD_STRING = gameData.secretWordArray.join("");
-  
-  gameData.BLANKS_TAG.textContent = gameData.secretWord;
-  gameData.HINT_BUTTON.style.visibility = "hidden";
-  gameData.NEW_WORD_BUTTON.style.visibility = "visible";
+  const BLANKS_STRING = blanks.join("");
+  const SECRET_WORD_STRING = secretWordArray.join("");
 
-  if (BLANKS_STRING === SECRET_WORD_STRING)
-    gameData.BLANKS_TAG.classList.add("correct");
-  else gameData.BLANKS_TAG.classList.add("incorrect");
+  BLANKS_TAG.textContent = secretWord;
+  HINT_BUTTON.style.visibility = "hidden";
+  NEW_WORD_BUTTON.style.visibility = "visible";
+
+  if (BLANKS_STRING === SECRET_WORD_STRING) BLANKS_TAG.classList.add("correct");
+  else BLANKS_TAG.classList.add("incorrect");
 }
 
 /**
  * Initialize the game and choose a secret word at random.
  */
 function initializeGame() {
-  gameData.NEW_WORD_BUTTON.style.visibility = "hidden";
-  gameData.BLANKS_TAG.classList.remove("correct", "incorrect");
-  gameData.VIRTUAL_KEYS.querySelectorAll(".btn").forEach((BUTTON) => {
+  NEW_WORD_BUTTON.style.visibility = "hidden";
+  BLANKS_TAG.classList.remove("correct", "incorrect");
+  VIRTUAL_KEYS.querySelectorAll(".btn").forEach((BUTTON) => {
     BUTTON.classList.remove("disabled");
   });
-  gameData.secretWord =
-    gameData.WORDS_ARRAY[
-      Math.floor(Math.random() * gameData.WORDS_ARRAY.length)
-    ];
-  gameData.trials = gameData.MAX_TRIALS;
-  gameData.blanks = Array(gameData.secretWord.length).fill("_");
-  gameData.secretWordArray = gameData.secretWord.split("");
-  gameData.hintUsed = false;
-  gameData.BLANKS_TAG.textContent = gameData.blanks.join(" ");
+  secretWord = wordsArray[Math.floor(Math.random() * wordsArray.length)];
+  trials = MAX_TRIALS;
+  blanks = Array(secretWord.length).fill("_");
+  secretWordArray = secretWord.split("");
+  hintUsed = false;
+  BLANKS_TAG.textContent = blanks.join(" ");
   updateHangmanImage();
 }
 
@@ -140,7 +129,7 @@ function initializeGame() {
  * @param {Event} event - The click event object.
  */
 function play(event) {
-  if (gameData.trials === 0 || !gameData.blanks.includes("_")) return;
+  if (trials === 0 || !blanks.includes("_")) return;
 
   const BUTTON = event.target;
   const LETTER = BUTTON.getAttribute("data-value");
@@ -150,18 +139,16 @@ function play(event) {
 
   BUTTON.classList.add("disabled");
 
-  if (gameData.trials === 1 && !gameData.hintUsed)
-    gameData.HINT_BUTTON.style.visibility = "visible";
+  if (trials === 1 && !hintUsed) HINT_BUTTON.style.visibility = "visible";
 
-  if (!gameData.trials || !gameData.blanks.includes("_"))
-    checkGameResult();
+  if (!trials || !blanks.includes("_")) checkGameResult();
 }
 
 fetch("./words.txt")
   .then((response) => response.text())
   .then((data) => {
-    gameData.words = data;
-    gameData.WORDS_ARRAY = gameData.words.split(" ");
+    const WORDS = data;
+    wordsArray = WORDS.split(" ");
     initializeGame();
   })
   .catch((error) => {
@@ -171,11 +158,11 @@ fetch("./words.txt")
 document.addEventListener("click", (event) => {
   const TARGET = event.target;
 
-  if (TARGET === gameData.NEW_WORD_BUTTON) {
+  if (TARGET === NEW_WORD_BUTTON) {
     initializeGame();
-  } else if (TARGET.parentNode === gameData.VIRTUAL_KEYS) {
+  } else if (TARGET.parentNode === VIRTUAL_KEYS) {
     play(event);
-  } else if (TARGET === gameData.HINT_BUTTON) {
+  } else if (TARGET === HINT_BUTTON) {
     hint();
   }
 });
