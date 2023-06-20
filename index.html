@@ -1,23 +1,28 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
   <head>
+    <title>Hangman game</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hangman game</title>
+    <link rel="stylesheet" type="text/css" href="assets/normalize.css">
     <link rel="stylesheet" type="text/css" href="assets/style.css" />
+    <script src="assets/index.js" defer></script>
   </head>
   <body>
     <header><h1>Hangman game</h1></header>
+
     <section class="game-stage">
-      <button type="button" class="btn hint-button">Hint?</button>
-      <img/>
-      <button type="button" class="btn new-word-button">New Word</button>
+      <button type="button" class="btn hint-button" id="hint-button">Hint?</button>
+      <img id="hangman-image"/>
+      <button type="button" class="btn new-word-button" id="new-word-button">New Word</button>
     </section>
+
     <section class="game-current-word">
-      <p class="current-word"></p>
+      <p id="current-word"></p>
     </section>
+
     <section class="virtual-keyboard">
-      <div class="virtual-keys">
+      <div class="virtual-keys" id="virtual-keys">
         <button type="button" class="btn" data-value="a">A</button>
         <button type="button" class="btn" data-value="b">B</button>
         <button type="button" class="btn" data-value="c">C</button>
@@ -46,6 +51,5 @@
         <button type="button" class="btn" data-value="z">Z</button>
       </div>
     </section>
-    <script type="text/javascript" src="assets/index.js"></script>
   </body>
 </html>
