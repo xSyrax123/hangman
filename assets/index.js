@@ -7,10 +7,10 @@ const MAX_TRIALS = 6;
 
 let trials = MAX_TRIALS;
 let hintUsed;
-let blanks = [];
-let wordsArray = [];
-let secretWord = "";
-let secretWordArray = [];
+let blanks;
+let wordsArray;
+let secretWord;
+let secretWordArray;
 
 /**
  * Updates the hangman image based on the number of attempts remaining.
