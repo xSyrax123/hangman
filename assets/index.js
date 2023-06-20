@@ -70,15 +70,13 @@ function hint() {
   HINT_BUTTON.style.visibility = "hidden";
   hintUsed = true;
 
-  const VIRTUAL_KEYS_CHILDREN = VIRTUAL_KEYS.querySelectorAll(".btn:enabled");
+  const BUTTONS = VIRTUAL_KEYS.querySelectorAll(".btn:enabled");
   const MAX_LETTERS_TO_SHOW = Math.floor(Math.random() * 6) + 1;
   const INDEXES = [];
 
   while (INDEXES.length < MAX_LETTERS_TO_SHOW) {
-    const RANDOM_INDEX = Math.floor(
-      Math.random() * VIRTUAL_KEYS_CHILDREN.length
-    );
-    const BUTTON = VIRTUAL_KEYS_CHILDREN[RANDOM_INDEX];
+    const RANDOM_INDEX = Math.floor(Math.random() * BUTTONS.length);
+    const BUTTON = BUTTONS[RANDOM_INDEX];
     const LETTER = BUTTON.getAttribute("data-value");
 
     if (!INDEXES.includes(RANDOM_INDEX) && !secretWordArray.includes(LETTER)) {
