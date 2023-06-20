@@ -8,7 +8,7 @@ const MAX_TRIALS = 6;
 let trials = MAX_TRIALS;
 let hintUsed;
 let blanks;
-let wordsArray;
+let words;
 let secretWord;
 let secretWordArray;
 
@@ -115,7 +115,7 @@ function initializeGame() {
   VIRTUAL_KEYS.querySelectorAll(".btn").forEach((BUTTON) => {
     BUTTON.classList.remove("disabled");
   });
-  secretWord = wordsArray[Math.floor(Math.random() * wordsArray.length)];
+  secretWord = words[Math.floor(Math.random() * words.length)];
   trials = MAX_TRIALS;
   blanks = Array(secretWord.length).fill("_");
   secretWordArray = secretWord.split("");
@@ -147,7 +147,7 @@ function play(event) {
 fetch("./words.txt")
   .then((response) => response.text())
   .then((data) => {
-    wordsArray = data.split(" ");
+    words = data.split(" ");
     initializeGame();
   })
   .catch((error) => {
