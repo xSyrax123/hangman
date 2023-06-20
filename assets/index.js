@@ -99,7 +99,6 @@ function checkGameResult() {
   const SECRET_WORD_STRING = secretWordArray.join("");
 
   BLANKS_TAG.textContent = secretWord;
-  HINT_BUTTON.style.visibility = "hidden";
   NEW_WORD_BUTTON.style.visibility = "visible";
 
   if (BLANKS_STRING === SECRET_WORD_STRING) BLANKS_TAG.classList.add("correct");
