@@ -71,7 +71,7 @@ function hint() {
   HINT_BUTTON.style.visibility = "hidden";
   hintUsed = true;
 
-  const VIRTUAL_KEYS_CHIDREN = Array.from(
+  const VIRTUAL_KEYS_CHILDREN = Array.from(
     VIRTUAL_KEYS.querySelectorAll(".btn:not(.disabled)")
   );
   const MAX_LETTERS_TO_SHOW = Math.floor(Math.random() * 6) + 1;
@@ -79,9 +79,9 @@ function hint() {
 
   while (INDEXES.length < MAX_LETTERS_TO_SHOW) {
     const RANDOM_INDEX = Math.floor(
-      Math.random() * VIRTUAL_KEYS_CHIDREN.length
+      Math.random() * VIRTUAL_KEYS_CHILDREN.length
     );
-    const BUTTON = VIRTUAL_KEYS_CHIDREN[RANDOM_INDEX];
+    const BUTTON = VIRTUAL_KEYS_CHILDREN[RANDOM_INDEX];
     const LETTER = BUTTON.getAttribute("data-value");
 
     if (!INDEXES.includes(RANDOM_INDEX) && !secretWordArray.includes(LETTER)) {
